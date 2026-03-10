@@ -191,4 +191,5 @@ void Program::Reset() {
     count = 0;
     delay = 0;
     lives = 3;
+    Program();
 }
