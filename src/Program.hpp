@@ -17,6 +17,7 @@ class Program {
         int respawns = 0;
         int count = 0;
         int delay = 0;
+        int score = 0;
         int lives = 3;
         int pauseFrames = 0;
 
