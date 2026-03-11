@@ -72,6 +72,7 @@ void Program::Update() {
 
 void Program::Draw() {
     background.Draw();
+    DrawText(("Score: " + std::to_string(score)).c_str(), 10, 10, 20, WHITE);
     if (pauseFrames <= 0 && !gameOver) player->draw();
     for (Animation& a : Animation::animations) a.draw();
 
@@ -198,3 +199,4 @@ void Program::Reset() {
     score = 0;
     Program();
 }
+
