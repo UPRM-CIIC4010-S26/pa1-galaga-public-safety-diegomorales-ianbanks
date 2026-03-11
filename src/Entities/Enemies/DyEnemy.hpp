@@ -8,7 +8,7 @@ class DyEnemy : public Enemy {
         bool loop = false;
 
     public:
-        int pointvalue = 5;
+        int pointvalue = 100;
         DyEnemy(float x, float y) : Enemy(x, y) { 
             this->cooldown = GetRandomValue(90, 300);
             this->health = 1; 

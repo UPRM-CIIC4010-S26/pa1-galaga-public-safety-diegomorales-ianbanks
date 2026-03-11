@@ -6,7 +6,7 @@ class StEnemy : public Enemy {
         float angle = 90;
 
     public:
-        int pointvalue = 5;
+        int pointvalue = 300;
         StEnemy(float x, float y) : Enemy(x, y) { 
             this->cooldown = GetRandomValue(90, 600);
         }

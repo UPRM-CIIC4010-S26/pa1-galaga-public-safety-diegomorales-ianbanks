@@ -9,7 +9,7 @@ class SpEnemy : public Enemy {
         bool stop = false;
 
     public:
-        int pointvalue = 5;
+        int pointvalue = 200;
         SpEnemy(float x, float y) : Enemy(x, y) { 
             this->cooldown = GetRandomValue(300, 1380); 
             this->health = 4;
