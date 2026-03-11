@@ -9,6 +9,7 @@ class StdEnemy : public Enemy {
         inline static int attackCooldown = 360;
 
     public:
+        int pointvalue = 5;
         inline static bool attackInProgress = false;
 
         StdEnemy(float x, float y) : Enemy(x, y) { 
@@ -38,4 +39,5 @@ class StdEnemy : public Enemy {
                 attackCooldown = 360;
             }
         }
+        int getScore() override { return pointvalue; }
 };

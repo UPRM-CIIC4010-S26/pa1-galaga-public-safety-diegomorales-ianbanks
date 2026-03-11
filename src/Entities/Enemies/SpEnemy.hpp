@@ -9,6 +9,7 @@ class SpEnemy : public Enemy {
         bool stop = false;
 
     public:
+        int pointvalue = 5;
         SpEnemy(float x, float y) : Enemy(x, y) { 
             this->cooldown = GetRandomValue(300, 1380); 
             this->health = 4;
@@ -23,4 +24,5 @@ class SpEnemy : public Enemy {
         void draw() override;
         void update(std::pair<float, float> pos, HitBox target) override;
         void attack(HitBox target) override;
+        int getScore() override { return pointvalue; }
 };
