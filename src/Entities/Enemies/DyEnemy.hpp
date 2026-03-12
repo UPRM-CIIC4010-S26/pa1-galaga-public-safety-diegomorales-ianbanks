@@ -1,6 +1,6 @@
 #pragma once
 #include "Enemy.hpp"
-static int nextTexture = 0;
+static int nextTexture = GetRandomValue(0,1);
 
 class DyEnemy : public Enemy {
     private: 
@@ -8,7 +8,6 @@ class DyEnemy : public Enemy {
         float aimAngle = 225;
         bool loop = false;
         int randomNumber;
-
 
     public:
         int pointvalue = 100;
