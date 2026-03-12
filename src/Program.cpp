@@ -203,8 +203,10 @@ void Program::Reset() {
 }
 
 void Program::MoreLives() {
-    while (score >= extraLife && lives < 5) {
-        lives++;
+    while (score >= extraLife){
+        if (lives < 5){
+            lives++;
+        }
         extraLife += 1000;
     }
 }
