@@ -37,6 +37,7 @@ void Program::Update() {
 
     if (!startup && !paused && !gameOver && pauseFrames <= 0) {
         Enemy::ManageEnemies(player->hitBox, score);
+        MoreLives();
         StdEnemy::attackReset();
         ManageEnemyRespawns();
         player->update();
@@ -197,6 +198,13 @@ void Program::Reset() {
     delay = 0;
     lives = 3;
     score = 0;
+    extraLife = 1000;
     Program();
 }
 
+void Program::MoreLives() {
+    while (score >= extraLife && lives < 5) {
+        lives++;
+        extraLife += 1000;
+    }
+}
