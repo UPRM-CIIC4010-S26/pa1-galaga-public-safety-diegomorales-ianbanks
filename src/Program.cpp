@@ -74,6 +74,7 @@ void Program::Update() {
 void Program::Draw() {
     background.Draw();
     DrawText(("Score: " + std::to_string(score)).c_str(), 10, 10, 20, WHITE);
+    DrawText(("RespawnCooldown: " + std::to_string(respawnCooldown)).c_str(), 10, 40, 20, WHITE);
     if (pauseFrames <= 0 && !gameOver) player->draw();
     for (Animation& a : Animation::animations) a.draw();
 
@@ -97,14 +98,12 @@ void Program::ManageEnemyRespawns() {
 
     respawnCooldown -= 1;
     if (respawnCooldown <= 0) {
-        respawnCooldown = 1080;
         for (std::pair<std::pair<float, float>, Enemy*>& p : Enemy::enemies) {
             if (!p.second && p.first.second != 150) {
                 int eType = GetRandomValue(1, 3);
 
                 if (eType == 1) {
                     p.second = new StEnemy(GetScreenWidth() / 2 - 15, 0, true);
-                    respawnCooldown /= 2;
                 } else {
                     p.second = new StdEnemy(GetScreenWidth() / 2 - 15, 0, true);
                 }
@@ -117,6 +116,8 @@ void Program::ManageEnemyRespawns() {
                 break;
             }
         }
+        respawnCooldown = 1080;
+        ScoreRespawn();
     }
 
     if(respawns >= 4) {
@@ -199,6 +200,7 @@ void Program::Reset() {
     lives = 3;
     score = 0;
     extraLife = 1000;
+    extraDifficulty = 200;
     Program();
 }
 
@@ -208,5 +210,14 @@ void Program::MoreLives() {
             lives++;
         }
         extraLife += 1000;
+    }
+}
+
+void Program::ScoreRespawn() {
+    respawnCooldown = 1080;
+    
+    while (score >= extraDifficulty) {
+        respawnCooldown = std::max(respawnCooldown - 30, 300);
+        extraDifficulty += 200;
     }
 }
