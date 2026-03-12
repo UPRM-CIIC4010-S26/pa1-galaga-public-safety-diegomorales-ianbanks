@@ -160,7 +160,7 @@ void Program::KeyInputs() {
     if (!gameOver && !paused && IsKeyPressed('I')) startup = !startup;
     if (IsKeyPressed('H')) HitBox::drawHitbox = !HitBox::drawHitbox;
     if (IsKeyPressed('K')) {
-        score += 500;
+        score += 200;
         std::cout << score << std::endl;
     }
     
