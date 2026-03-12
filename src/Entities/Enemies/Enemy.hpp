@@ -5,6 +5,7 @@
 #include "Animation.hpp"
 #include <iostream>
 
+
 class Enemy {
     protected:
         float angle = 90;
@@ -55,6 +56,7 @@ class Enemy {
                         if (p2.ID != 1 && HitBox::Collision(p.second->hitBox, p2.getHitBox())) {
                             p.second->health--;
                             p2.del = true;
+                            PlaySound(SoundManager::hit);;
                         }
                     }
 
@@ -62,6 +64,7 @@ class Enemy {
                         Animation::animations.push_back(
                             Animation(p.second->position.first, p.second->position.second, 155, 0, 33, 33, 30, 30, 4, ImageManager::SpriteSheet)
                         );
+                        PlaySound(SoundManager::dead);
                         score += p.second->getScore();
                         p.second = nullptr;
                     }
