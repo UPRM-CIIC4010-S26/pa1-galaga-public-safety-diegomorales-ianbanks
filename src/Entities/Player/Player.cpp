@@ -32,9 +32,15 @@ void Player::update() {
 
 void Player::keyInputs() {
     if (IsKeyDown('A')) this->position.first -= this->speed;
+    if (IsKeyDown('A') && IsKeyDown(KEY_RIGHT_SHIFT)) this->position.first -= this->speed + 0.7;
     if (IsKeyDown('D')) this->position.first += this->speed;
+    if (IsKeyDown('D') && IsKeyDown(KEY_RIGHT_SHIFT)) this->position.first += this->speed + 0.7;
+
     if (IsKeyDown(KEY_LEFT)) this->position.first -= this->speed;
     if (IsKeyDown(KEY_RIGHT)) this->position.first += this->speed;
+
+    if (IsKeyDown(KEY_SPACE)) this->attack(); //-> I'm saving this for the AK 47 input
+
     if (IsKeyPressed(KEY_SPACE)) this->attack();
 }
 
