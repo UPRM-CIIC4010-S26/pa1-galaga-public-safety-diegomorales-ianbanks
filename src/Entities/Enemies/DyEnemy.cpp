@@ -1,11 +1,18 @@
 #include "DyEnemy.hpp"
 
-
 void DyEnemy::draw() {
     if (HitBox::drawHitbox) this->hitBox.draw();
+
+    if (randomNumber == 0) {  
     DrawTexturePro(ImageManager::SpriteSheet, Rectangle{2, 128, 13, 14}, 
-                Rectangle{this->position.first + 15, this->position.second + 15, 30, 30}, 
-                Vector2{15, 15}, this->aimAngle, WHITE);
+        Rectangle{this->position.first + 15, this->position.second + 15, 30, 30}, 
+        Vector2{15, 15}, this->aimAngle, WHITE);
+    } 
+    else {
+        DrawTexturePro(ImageManager::SpriteSheet, Rectangle{2, 147, 13, 13}, 
+            Rectangle{this->position.first + 15, this->position.second + 15, 30, 30}, 
+            Vector2{15, 15}, this->aimAngle, WHITE);
+        }
 }
 
 void DyEnemy::update(std::pair<float, float> pos, HitBox target) {
