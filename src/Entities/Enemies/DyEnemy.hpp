@@ -1,21 +1,18 @@
 #pragma once
 #include "Enemy.hpp"
-static int nextTexture = GetRandomValue(0,1);
 
 class DyEnemy : public Enemy {
     private: 
         float angle = 135;
         float aimAngle = 225;
         bool loop = false;
-        int randomNumber;
+        int nextTexture = GetRandomValue(0,1);
 
     public:
         int pointvalue = 100;
         DyEnemy(float x, float y) : Enemy(x, y) { 
             this->cooldown = GetRandomValue(90, 300);
             this->health = 1;
-            this->randomNumber = nextTexture;
-            nextTexture = 1 - nextTexture;
         }
 
         void draw() override;
