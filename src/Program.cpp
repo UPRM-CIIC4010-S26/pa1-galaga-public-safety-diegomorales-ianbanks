@@ -73,7 +73,8 @@ void Program::Update() {
 
 void Program::Draw() {
     background.Draw();
-    DrawText(("Score: " + std::to_string(score)).c_str(), 10, 10, 20, WHITE);
+    DrawTextPro(GetFontDefault(), "SCORE", Vector2{10, 10}, Vector2{0, 0}, 0, 25, 2.0f, RED);
+    DrawTextPro(GetFontDefault(), (std::to_string(score)).c_str(), Vector2{10, 40}, Vector2{0, 0}, 0, 25, 2.0f, WHITE);
     if (pauseFrames <= 0 && !gameOver) player->draw();
     for (Animation& a : Animation::animations) a.draw();
 
