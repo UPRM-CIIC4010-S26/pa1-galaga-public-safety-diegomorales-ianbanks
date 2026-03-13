@@ -1,4 +1,9 @@
 #include "Player.hpp"
+#include <vector>
+#include <chrono>
+#include <thread>
+
+using namespace std;
 
 void Player::draw() {
     if (HitBox::drawHitbox) this->hitBox.draw();
@@ -31,23 +36,67 @@ void Player::update() {
 }
 
 void Player::keyInputs() {
-    if (IsKeyDown('A')) this->position.first -= this->speed;
-    if (IsKeyDown('A') && IsKeyDown(KEY_RIGHT_SHIFT)) this->position.first -= this->speed + 0.7;
-    if (IsKeyDown('D')) this->position.first += this->speed;
-    if (IsKeyDown('D') && IsKeyDown(KEY_RIGHT_SHIFT)) this->position.first += this->speed + 0.7;
 
-    if (IsKeyDown(KEY_LEFT)) this->position.first -= this->speed;
-    if (IsKeyDown(KEY_RIGHT)) this->position.first += this->speed;
+    // bool boost = false;
+    // int stamina = 500;
 
-    if (IsKeyDown(KEY_SPACE)) this->attack(); //-> I'm saving this for the AK 47 input
+    // if (IsKeyDown(KEY_LEFT_SHIFT)) {
+    //     boost = true;
+    //     while (boost == true) {
+    //         stamina--;
+    //     }
+    // }
 
-    if (IsKeyPressed(KEY_SPACE)) this->attack();
+    if (IsKeyDown('A') || IsKeyDown(KEY_LEFT)) this->position.first -= this->speed;
+    if ((IsKeyDown('A') || IsKeyDown(KEY_RIGHT)) && IsKeyDown(KEY_RIGHT_SHIFT)) this->position.first -= this->speed + 0.7;
+    if (IsKeyDown('D') || IsKeyDown(KEY_RIGHT)) this->position.first += this->speed;
+    if ((IsKeyDown('D') || IsKeyDown(KEY_RIGHT)) && IsKeyDown(KEY_RIGHT_SHIFT)) this->position.first += this->speed + 0.7;
+    if (IsKeyPressed(KEY_SPACE) || IsKeyDown(KEY_SPACE)) this->attack();
+
+    //======================================================================================================
+
+    // this entire code down checks if the keys A-D-W-S are typed in the sequence 
+    if (IsKeyPressed('A')) {
+        if ( userInput.empty() ) {
+            userInput.push_back('A');
+        } else { userInput.clear(); }
+    }
+    if (IsKeyPressed('D')) {
+        if ( !userInput.empty() && userInput.back() == 'A') {
+            userInput.push_back('D');
+        } else { userInput.clear(); }
+    }
+    if ( IsKeyPressed('W')) {
+        if (!userInput.empty() && userInput.back() == 'D') {
+            userInput.push_back('W');
+        } else { userInput.clear(); }
+    }
+    if ( IsKeyPressed('S')) {
+        if (!userInput.empty() && userInput.back() == 'W') {
+            userInput.push_back('S');
+        } else { userInput.clear(); }
+    }
+    if (userInput == reference) {
+        rapidFireUnlocked = true;
+        rapidFireTimer = 2.0f;
+        userInput.clear();
+    }
+    if(rapidFireUnlocked) {
+        rapidFireTimer -= GetFrameTime();
+       if (rapidFireTimer <= 0.0f) {
+            rapidFireUnlocked = false;
+        }
+    }  
 }
 
 void Player::attack() {
     if (cooldown <= 0) {
         Projectile::projectiles.push_back(Projectile(position.first + + this->hitBox.box.width / 2, position.second, 0));
         PlaySound(SoundManager::shoot);
-        cooldown = 30;
+        
+        if (rapidFireUnlocked) 
+            cooldown = 5;
+        else 
+            cooldown = 30;
     }
 }
