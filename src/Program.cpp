@@ -74,7 +74,6 @@ void Program::Update() {
 void Program::Draw() {
     background.Draw();
     DrawText(("Score: " + std::to_string(score)).c_str(), 10, 10, 20, WHITE);
-    DrawText(("RespawnCooldown: " + std::to_string(respawnCooldown)).c_str(), 10, 40, 20, WHITE);
     if (pauseFrames <= 0 && !gameOver) player->draw();
     for (Animation& a : Animation::animations) a.draw();
 
@@ -217,7 +216,9 @@ void Program::ScoreRespawn() {
     respawnCooldown = 1080;
     
     while (score >= extraDifficulty) {
-        respawnCooldown = std::max(respawnCooldown - 30, 300);
+        if (respawnCooldown > 300) {
+            respawnCooldown -= 60;
+        }
         extraDifficulty += 200;
     }
 }
