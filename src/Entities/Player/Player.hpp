@@ -12,8 +12,8 @@ class Player {
         int speed = 3;
         vector<char> reference{'A', 'D', 'W', 'S'}; // this is the vector I'm comparing with the user input in order to activate the cheat
         vector<char> userInput; // this takes user inputs in order to activate the cheat
-        bool rapidFireUnlocked = false; // flag to activateeee
-        float rapidFireTimer = 0.0f;
+        bool burstFireUnlocked = false; // flag to activateeee
+        float burstFireTimer = 0.0f;
     
     public:
         std::pair<float, float> position;

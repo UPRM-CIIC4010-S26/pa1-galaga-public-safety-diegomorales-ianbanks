@@ -77,14 +77,15 @@ void Player::keyInputs() {
         } else { userInput.clear(); }
     }
     if (userInput == reference) {
-        rapidFireUnlocked = true;
-        rapidFireTimer = 2.0f;
+        burstFireUnlocked = true;
+        PlaySound(SoundManager::burstFire);
+        burstFireTimer = 2.0f;
         userInput.clear();
     }
-    if(rapidFireUnlocked) {
-        rapidFireTimer -= GetFrameTime();
-       if (rapidFireTimer <= 0.0f) {
-            rapidFireUnlocked = false;
+    if(burstFireUnlocked) {
+        burstFireTimer -= GetFrameTime();
+       if (burstFireTimer <= 0.0f) {
+            burstFireUnlocked = false;
         }
     }  
 }
@@ -94,7 +95,7 @@ void Player::attack() {
         Projectile::projectiles.push_back(Projectile(position.first + + this->hitBox.box.width / 2, position.second, 0));
         PlaySound(SoundManager::shoot);
         
-        if (rapidFireUnlocked) 
+        if (burstFireUnlocked) 
             cooldown = 5;
         else 
             cooldown = 30;
