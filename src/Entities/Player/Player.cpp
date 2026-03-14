@@ -36,20 +36,10 @@ void Player::update() {
 }
 
 void Player::keyInputs() {
+    if (IsKeyDown('A') || IsKeyDown(KEY_RIGHT)) this->position.first -= this->speed + 0.7;
+    if (IsKeyDown('D') || IsKeyDown(KEY_RIGHT)) this->position.first += this->speed + 0.7;
 
-    // bool boost = false;
-    // int stamina = 500;
-
-    // if (IsKeyDown(KEY_LEFT_SHIFT)) {
-    //     boost = true;
-    //     while (boost == true) {
-    //         stamina--;
-    //     }
-    // }
-
-    if (IsKeyDown('A') || IsKeyDown(KEY_LEFT)) this->position.first -= this->speed;
     if ((IsKeyDown('A') || IsKeyDown(KEY_RIGHT)) && IsKeyDown(KEY_RIGHT_SHIFT)) this->position.first -= this->speed + 0.7;
-    if (IsKeyDown('D') || IsKeyDown(KEY_RIGHT)) this->position.first += this->speed;
     if ((IsKeyDown('D') || IsKeyDown(KEY_RIGHT)) && IsKeyDown(KEY_RIGHT_SHIFT)) this->position.first += this->speed + 0.7;
     if (IsKeyPressed(KEY_SPACE) || IsKeyDown(KEY_SPACE)) this->attack();
 
@@ -77,8 +67,8 @@ void Player::keyInputs() {
         } else { userInput.clear(); }
     }
     if (userInput == reference) {
-        burstFireUnlocked = true;
         PlaySound(SoundManager::burstFire);
+        burstFireUnlocked = true;
         burstFireTimer = 2.0f;
         userInput.clear();
     }
