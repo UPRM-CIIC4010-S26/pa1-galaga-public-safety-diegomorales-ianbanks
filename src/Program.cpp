@@ -79,7 +79,7 @@ void Program::Draw() {
     background.Draw();
     DrawTextPro(GetFontDefault(), "SCORE", Vector2{10, 10}, Vector2{0, 0}, 0, 25, 2.0f, RED);
     DrawTextPro(GetFontDefault(), (std::to_string(score)).c_str(), Vector2{10, 40}, Vector2{0, 0}, 0, 25, 2.0f, WHITE);
-    DrawTextPro(GetFontDefault(), "HIGH SCORE", Vector2{430, 10}, Vector2{0, 0}, 0, 25, 2.0f, RED);
+    DrawTextPro(GetFontDefault(), "HIGH SCORE", Vector2{435, 10}, Vector2{0, 0}, 0, 25, 2.0f, RED);
     DrawTextPro(GetFontDefault(), (std::to_string(highScore)).c_str(), Vector2{500, 40}, Vector2{0, 0}, 0, 25, 2.0f, WHITE);
     if (pauseFrames <= 0 && !gameOver) player->draw();
     for (Animation& a : Animation::animations) a.draw();
