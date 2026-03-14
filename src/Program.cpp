@@ -65,7 +65,11 @@ void Program::Update() {
 
         }
 
-        if (lives <= 0 && pauseFrames <= 0) gameOver = true;
+        if (lives <= 0 && pauseFrames <= 0){
+            gameOver = true;
+            highScore = std::max(score, highScore);
+        }
+
         Projectile::CleanProjectiles();
         Projectile::ProjectileCollision();
     }
@@ -73,7 +77,10 @@ void Program::Update() {
 
 void Program::Draw() {
     background.Draw();
-    DrawText(("Score: " + std::to_string(score)).c_str(), 10, 10, 20, WHITE);
+    DrawTextPro(GetFontDefault(), "SCORE", Vector2{10, 10}, Vector2{0, 0}, 0, 25, 2.0f, RED);
+    DrawTextPro(GetFontDefault(), (std::to_string(score)).c_str(), Vector2{10, 40}, Vector2{0, 0}, 0, 25, 2.0f, WHITE);
+    DrawTextPro(GetFontDefault(), "HIGH SCORE", Vector2{435, 10}, Vector2{0, 0}, 0, 25, 2.0f, RED);
+    DrawTextPro(GetFontDefault(), (std::to_string(highScore)).c_str(), Vector2{500, 40}, Vector2{0, 0}, 0, 25, 2.0f, WHITE);
     if (pauseFrames <= 0 && !gameOver) player->draw();
     for (Animation& a : Animation::animations) a.draw();
 
@@ -95,7 +102,8 @@ void Program::Draw() {
 void Program::ManageEnemyRespawns() {
     delay = std::max(delay - 1, 0);
 
-    respawnCooldown -= 1;
+    respawnCooldown -= ScoreRespawn();
+    respawnCooldown = std::max(respawnCooldown - 1, 0);
     if (respawnCooldown <= 0) {
         for (std::pair<std::pair<float, float>, Enemy*>& p : Enemy::enemies) {
             if (!p.second && p.first.second != 150) {
@@ -116,7 +124,6 @@ void Program::ManageEnemyRespawns() {
             }
         }
         respawnCooldown = 1080;
-        ScoreRespawn();
     }
 
     if(respawns >= 4) {
@@ -199,7 +206,9 @@ void Program::Reset() {
     lives = 3;
     score = 0;
     extraLife = 1000;
-    extraDifficulty = 200;
+    extraDifficulty = 350;
+    cooldownReduction = 1;
+    highScore = std::max(score, highScore);
     Program();
 }
 
@@ -212,13 +221,10 @@ void Program::MoreLives() {
     }
 }
 
-void Program::ScoreRespawn() {
-    respawnCooldown = 1080;
-    
+double Program::ScoreRespawn(){
     while (score >= extraDifficulty) {
-        if (respawnCooldown > 300) {
-            respawnCooldown -= 60;
-        }
-        extraDifficulty += 200;
+        cooldownReduction += 0.04;
+        extraDifficulty += 350;
     }
+    return cooldownReduction;
 }

@@ -22,6 +22,8 @@ class Program {
         int pauseFrames = 0;
         int extraLife = 1000;
         int extraDifficulty = 200;
+        double cooldownReduction = 1;
+        int highScore = 0;
 
         bool startup = true;
         bool paused = false;
@@ -40,7 +42,7 @@ class Program {
         void PlayerReset();
         void Reset();
         void MoreLives();
-        void ScoreRespawn();
+        double ScoreRespawn();
           
         ~Program() {}
 };
