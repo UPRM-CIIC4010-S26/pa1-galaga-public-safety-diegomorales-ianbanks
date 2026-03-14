@@ -96,7 +96,8 @@ void Program::Draw() {
 void Program::ManageEnemyRespawns() {
     delay = std::max(delay - 1, 0);
 
-    respawnCooldown -= 1;
+    respawnCooldown -= ScoreRespawn();
+    respawnCooldown = std::max(respawnCooldown - 1, 0);
     if (respawnCooldown <= 0) {
         for (std::pair<std::pair<float, float>, Enemy*>& p : Enemy::enemies) {
             if (!p.second && p.first.second != 150) {
@@ -117,7 +118,6 @@ void Program::ManageEnemyRespawns() {
             }
         }
         respawnCooldown = 1080;
-        ScoreRespawn();
     }
 
     if(respawns >= 4) {
@@ -200,7 +200,8 @@ void Program::Reset() {
     lives = 3;
     score = 0;
     extraLife = 1000;
-    extraDifficulty = 200;
+    extraDifficulty = 350;
+    cooldownReduction = 1;
     Program();
 }
 
@@ -213,13 +214,10 @@ void Program::MoreLives() {
     }
 }
 
-void Program::ScoreRespawn() {
-    respawnCooldown = 1080;
-    
+double Program::ScoreRespawn(){
     while (score >= extraDifficulty) {
-        if (respawnCooldown > 300) {
-            respawnCooldown -= 60;
-        }
-        extraDifficulty += 200;
+        cooldownReduction += 0.04;
+        extraDifficulty += 350;
     }
+    return cooldownReduction;
 }
